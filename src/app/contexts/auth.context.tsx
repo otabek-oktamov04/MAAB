@@ -47,7 +47,8 @@ export const AuthContextProvider = ({
   }, []);
 
   const login = useCallback(async (value: ILoginForm) => {
-    const response = await publicAPI.post("user/login/", value);
+    const response = await publicAPI.post("login/", value);
+    console.log(response)
     localStorage.setItem("refreshToken", response.data.refresh);
     localStorage.setItem("accessToken", response.data.access);
     setIsAuthenticated(true);

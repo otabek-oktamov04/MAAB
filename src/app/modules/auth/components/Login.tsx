@@ -41,16 +41,16 @@ export function Login() {
       id="kt_login_signin_form"
     >
       <Heading fontSize="32px" fontWeight="medium" textAlign="center" mb="32px">
-        Sig in
+        Kirish
       </Heading>
 
       <FormControl>
-        <FormLabel>Phone number</FormLabel>
+        <FormLabel>Email</FormLabel>
         <Input
           placeholder="login"
           size="lg"
           mb="4"
-          {...register("phone_number", {
+          {...register("email", {
             required: true,
           })}
           type="text"
@@ -58,7 +58,7 @@ export function Login() {
       </FormControl>
 
       <FormControl mb="24px">
-        <FormLabel>Password</FormLabel>
+        <FormLabel>Parol</FormLabel>
         <InputGroup display="flex" alignItems="center">
           <Input
             size="lg"
@@ -88,7 +88,7 @@ export function Login() {
           id="kt_sign_in_submit"
           className="btn btn-primary"
         >
-          {!isLoading && <span className="indicator-label">Log in</span>}
+          {!isLoading && <span className="indicator-label">Kirish</span>}
           {isLoading && (
             <span
               className="indicator-progress disabled"

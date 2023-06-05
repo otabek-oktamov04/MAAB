@@ -30,7 +30,7 @@ const PrivateRoutes = () => {
           }
         />
         <Route
-          path="dashboard/stations"
+          path="dashboard/news"
           element={
             <SuspensedView>
               <Stations />
@@ -38,7 +38,7 @@ const PrivateRoutes = () => {
           }
         />
         <Route
-          path="dashboard/reviews"
+          path="dashboard/users"
           element={
             <ReviewContextProvider>
               <SuspensedView>

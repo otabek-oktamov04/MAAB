@@ -64,59 +64,19 @@ export const Stations = () => {
   const columns = useMemo(
     () => [
       {
-        Header: "Photo",
-        accessor: "images",
-        Cell: ({ row }: Cell<IStation>) => {
-          const mainImage =
-            Array.isArray(row.original?.images) &&
-            row.original.images[0]?.image;
-          return (
-            <Image
-              width="36px"
-              height="36px"
-              borderRadius="full"
-              src={mainImage?.toString()}
-            />
-          );
-        },
+        Header: "ID",
+        accessor: "id",
       },
       {
-        Header: "Names station",
-        accessor: "name",
+        Header: "Sarlavha",
+        accessor: "newsContent",
       },
+
       {
-        Header: "Location",
-        accessor: "address",
-      },
-      {
-        Header: "Status",
+        Header: "Tavsif",
         accessor: "is_working",
-        Cell: ({ row }: Cell<IStation>) => {
-          return row.original.is_working ? (
-            <Text m="0" textColor="blue">
-              Working
-            </Text>
-          ) : (
-            <Text m="0" textColor="gray">
-              Out of work
-            </Text>
-          );
-        },
-      },
-      {
-        Header: "Rating",
-        Cell: ({ row }: Cell<IStation>) => {
-          return (
-            <Flex gap="1">
-              {[1, 2, 3, 4, 5].map((item) => (
-                <StarIcon
-                  color={
-                    item <= row.original.rating ? "yellow.400" : "gray.300"
-                  }
-                />
-              ))}
-            </Flex>
-          );
+        Cell: ({ row }: Cell<any>) => {
+          return <Text noOfLines={2}>{row.original?.description}</Text>;
         },
       },
       {
@@ -131,19 +91,19 @@ export const Stations = () => {
                     as={Button}
                     rightIcon={isOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
                   >
-                    Action
+                    Amallar
                   </MenuButton>
                   <MenuList>
                     <MenuItem as={Link} to={`${row.original.id}/edit`}>
-                      Edit
+                      Tahrirlash
                     </MenuItem>
                     <MenuItem
                       onClick={openDeleteModal.bind(null, row.original)}
                     >
-                      Delete
+                      O'chirish
                     </MenuItem>
                     <MenuItem as={Link} to={`${row.original.id}/view`}>
-                      View
+                      Ko'rish
                     </MenuItem>
                   </MenuList>
                 </>
@@ -166,9 +126,9 @@ export const Stations = () => {
       borderRadius="md"
     >
       <Heading mb="32px" fontSize="36px" fontWeight="bold" lineHeight="44px">
-        Information of station
+        Yangiliklar
         <Text fontSize="16px" fontWeight="semibold" color="gray">
-          Home - Information of station
+          Uy - Yangiliklar
         </Text>
       </Heading>
       <Flex justifyContent="space-between" mb="24px">
@@ -219,10 +179,10 @@ export const Stations = () => {
           </Menu>
 
           <Button as={Link} to="create" colorScheme="blue">
-            <AddIcon mr="2" /> Add station
+            <AddIcon mr="2" /> Yangilik qo'shish
           </Button>
-          <Button colorScheme="red">
-            <DeleteIcon mr="2" /> Delete
+          <Button isDisabled colorScheme="red">
+            <DeleteIcon mr="2" /> O'chirish
           </Button>
         </Flex>
       </Flex>
