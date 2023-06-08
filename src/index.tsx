@@ -11,13 +11,9 @@ import "./_metronic/assets/sass/style.react.scss";
 import { AppRoutes } from "./app/routing/AppRoutes";
 import { UiNotificationProvider } from "./app/contexts/notification.context";
 import { ChakraProvider } from "@chakra-ui/react";
-import {
-  AuthContextProvider,
-  ConnectorContextProvider,
-  StationContextProvider,
-  UsersContextProvider,
-} from "./app/contexts";
-import { NeighborPlacesContextProvider } from "./app/contexts/neighbor-places.context";
+import { AuthContextProvider } from "./app/contexts";
+import { NewsContextProvider } from "./app/contexts/news.context";
+import { UsersContextProvider } from "./app/contexts/user.context";
 
 const container = document.getElementById("root");
 if (container) {
@@ -26,15 +22,11 @@ if (container) {
       <UiNotificationProvider>
         <AuthContextProvider>
           <UsersContextProvider>
-          <NeighborPlacesContextProvider>
-            <ConnectorContextProvider>
-              <StationContextProvider>
-                <MetronicI18nProvider>
-                  <AppRoutes />
-                </MetronicI18nProvider>
-              </StationContextProvider>
-            </ConnectorContextProvider>
-          </NeighborPlacesContextProvider>
+            <NewsContextProvider>
+              <MetronicI18nProvider>
+                <AppRoutes />
+              </MetronicI18nProvider>
+            </NewsContextProvider>
           </UsersContextProvider>
         </AuthContextProvider>
       </UiNotificationProvider>

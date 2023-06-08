@@ -1,58 +1,58 @@
-import {AxiosRequestConfig, Method} from 'axios'
-import {useNotification} from '../../contexts/notification.context'
-import {authAPI} from '../../http'
-import {useAuthContext} from '../../contexts'
+import { AxiosRequestConfig, Method } from "axios";
+import { useNotification } from "../../contexts/notification.context";
+import { authAPI } from "../../http";
+import { useAuthContext } from "../../contexts";
 
 interface Config extends AxiosRequestConfig {
-  requiresAuth?: boolean
+  requiresAuth?: boolean;
 }
 
 interface FetchParams {
-  url: string
-  method: Method
-  data?: any
-  config?: Config
+  url: string;
+  method: Method;
+  data?: any;
+  config?: Config;
 }
 
 const useFetch = () => {
-  const {showError} = useNotification()
-  const {updateRefreshToken} = useAuthContext()
-  const sendRequest = async ({url, method, data, config}: FetchParams) => {
+  const { showError } = useNotification();
+  const { updateRefreshToken } = useAuthContext();
+  const sendRequest = async ({ url, method, data, config }: FetchParams) => {
     try {
       const response = await authAPI.request({
         url,
         method,
         data,
         ...config,
-      })
-      return response.data
+      });
+      return response.data;
     } catch (error: any) {
-      if (error.response.data.errors[0].code === 'TOKEN_INVALID_OR_EXPIRED') {
-        updateRefreshToken()
+      if (error.response.data.errors[0].code === "TOKEN_INVALID_OR_EXPIRED") {
+        updateRefreshToken();
       } else {
-        showError(error.response.data.errors[0].message)
+        showError(error.response.data.errors[0].message);
       }
-      throw error
+      throw error;
     }
-  }
+  };
 
   const get = async (url: string, config?: Config) => {
-    return sendRequest({url, method: 'get', config})
-  }
+    return sendRequest({ url, method: "get", config });
+  };
 
   const post = async (url: string, data?: any, config?: Config) => {
-    return sendRequest({url, method: 'post', data, config})
-  }
+    return sendRequest({ url, method: "post", data, config });
+  };
 
   const patch = async (url: string, data?: any, config?: Config) => {
-    return sendRequest({url, method: 'patch', data, config})
-  }
+    return sendRequest({ url, method: "put", data, config });
+  };
 
   const remove = async (url: string, config?: Config) => {
-    return sendRequest({url, method: 'delete', config})
-  }
+    return sendRequest({ url, method: "delete", config });
+  };
 
-  return {get, post, patch, remove}
-}
+  return { get, post, patch, remove };
+};
 
-export default useFetch
+export default useFetch;

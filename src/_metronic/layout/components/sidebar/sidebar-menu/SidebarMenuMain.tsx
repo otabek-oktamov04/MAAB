@@ -12,26 +12,7 @@ const SidebarMenuMain = () => {
           to="dashboard/users"
           hasBullet
         />
-        {/* <SidebarMenuItem title="Users" to="dashboard/users" hasBullet />
-        <SidebarMenuItem title="Investors" to="dashboard/investors" hasBullet /> */}
-        {/* <SidebarMenuItem
-          title="Qo'shni joylar"
-          to="dashboard/neighbor-places"
-          hasBullet
-        />
-        <SidebarMenuItem
-          title="rozetka turlari"
-          to="dashboard/connector-types"
-          hasBullet
-        /> */}
       </SidebarMenuItemWithSub>
-      {/* <SidebarMenuItemWithSub
-        to="dashboard/users"
-        title="Foydalanuvchilar"
-        icon="user"
-      >
-       
-      </SidebarMenuItemWithSub> */}
     </>
   );
 };

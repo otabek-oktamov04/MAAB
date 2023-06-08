@@ -4,17 +4,12 @@ import { MasterLayout } from "../../_metronic/layout/MasterLayout";
 import TopBarProgress from "react-topbar-progress-indicator";
 import { getCSSVariableValue } from "../../_metronic/assets/ts/_utils";
 import { WithChildren } from "../../_metronic/helpers";
-import Stations from "../components/stations/stations";
-import StationCreate from "../components/stations/station-create";
-import NeighborPlaces from "../components/neighbor-places/neighbor-places";
-import ConnectorTypes from "../components/connector-types/connector-types";
-import StationEdit from "../components/stations/station-edit";
-import UsersTable from "../components/users/users-table";
 import Dashboard from "../components/dashboard/dashboard";
-import Reviews from "../components/reviews/reviews";
-import { ReviewContextProvider } from "../contexts/review.context";
-import StationView from "../components/stations/station-view";
-import WIP from "../components/wip/wip";
+import News from "../components/news/news";
+import NewsView from "../components/news/view";
+import NewsForm from "../components/news/news-form";
+import NewsEdit from "../components/news/news-edit";
+import Users from "../components/users/users";
 
 const PrivateRoutes = () => {
   return (
@@ -33,66 +28,31 @@ const PrivateRoutes = () => {
           path="dashboard/news"
           element={
             <SuspensedView>
-              <Stations />
+              <News />
             </SuspensedView>
           }
         />
         <Route
-          path="dashboard/users"
-          element={
-            <ReviewContextProvider>
-              <SuspensedView>
-                <Reviews />
-              </SuspensedView>
-            </ReviewContextProvider>
-          }
-        />
-        <Route
-          path="dashboard/stations/create"
+          path="dashboard/news/:newsId"
           element={
             <SuspensedView>
-              <StationCreate />
+              <NewsView />
             </SuspensedView>
           }
         />
         <Route
-          path="dashboard/stations/:stationId/edit"
+          path="dashboard/news/create"
           element={
             <SuspensedView>
-              <StationEdit />
+              <NewsForm />
             </SuspensedView>
           }
         />
         <Route
-          path="dashboard/stations/:stationId/view"
+          path="dashboard/news/:newsId/edit"
           element={
             <SuspensedView>
-              <StationView />
-            </SuspensedView>
-          }
-        />
-        <Route
-          path="dashboard/investors/"
-          element={
-            <SuspensedView>
-              <WIP />
-            </SuspensedView>
-          }
-        />
-
-        <Route
-          path="dashboard/neighbor-places"
-          element={
-            <SuspensedView>
-              <NeighborPlaces />
-            </SuspensedView>
-          }
-        />
-        <Route
-          path="dashboard/connector-types"
-          element={
-            <SuspensedView>
-              <ConnectorTypes />
+              <NewsEdit />
             </SuspensedView>
           }
         />
@@ -100,7 +60,7 @@ const PrivateRoutes = () => {
           path="dashboard/users"
           element={
             <SuspensedView>
-              <UsersTable />
+              <Users />
             </SuspensedView>
           }
         />

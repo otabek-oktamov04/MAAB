@@ -5,17 +5,14 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import { ILoginForm, IUser } from "../shared/interfaces";
+import { ILoginForm } from "../shared/interfaces";
 import useFetch from "../shared/helpers/useFetch";
 import { publicAPI, userAPI } from "../http/public-api";
-import { UserRole } from "../shared/enums";
 
 interface IContext {
   isAuthenticated: boolean;
   login: (value: ILoginForm) => Promise<void>;
   updateRefreshToken: () => Promise<void>;
-  user: IUser | null;
-  getUser: () => Promise<void>;
 }
 
 interface IProps {
@@ -30,14 +27,6 @@ export const AuthContextProvider = ({
   children,
 }: React.PropsWithChildren<IProps>) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const [user, setUser] = useState<IUser | null>(null);
-  const { get } = useFetch();
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      getUser();
-    }
-  }, [isAuthenticated]);
 
   useEffect(() => {
     const refreshToken = localStorage.getItem("refreshToken");
@@ -47,23 +36,12 @@ export const AuthContextProvider = ({
   }, []);
 
   const login = useCallback(async (value: ILoginForm) => {
-    const response = await publicAPI.post("login/", value);
-    console.log(response)
-    localStorage.setItem("refreshToken", response.data.refresh);
-    localStorage.setItem("accessToken", response.data.access);
-    setIsAuthenticated(true);
-  }, []);
-
-  const getUser = useCallback(async () => {
-    try {
-      const response = await get("/admin/me");
-      setIsAuthenticated(true);
-      setUser(response.data);
-    } catch (error: any) {
-      if (error.response.data.errors[0].code === "TOKEN_INVALID_OR_EXPIRED") {
-        updateRefreshToken();
-      }
+    const response = await publicAPI.post("auth/login", value);
+    if (response.data.data.accessToken) {
+      localStorage.setItem("refreshToken", response.data.data.refreshToken);
+      localStorage.setItem("accessToken", response.data.data.accessToken);
     }
+    setIsAuthenticated(true);
   }, []);
 
   const updateRefreshToken = useCallback(async () => {
@@ -80,10 +58,8 @@ export const AuthContextProvider = ({
       isAuthenticated,
       updateRefreshToken,
       login,
-      user,
-      getUser,
     }),
-    [isAuthenticated, updateRefreshToken, login, user, getUser]
+    [isAuthenticated, updateRefreshToken, login]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -1,61 +1,61 @@
-import React, { createContext, useCallback, useContext, useState } from "react";
+import {
+  createContext,
+  FC,
+  ReactNode,
+  useCallback,
+  useContext,
+  useState,
+} from "react";
+
+import "react-toastify/dist/ReactToastify.css";
 import useFetch from "../shared/helpers/useFetch";
-import { IUserData } from "../shared/interfaces";
+import { IUser } from "../shared/interfaces/user";
 
 interface IContext {
-  //   createUser: (value: Partial<IUser>) => Promise<void>
-  //   updateUser: (id: string, value: Partial<IUser>) => Promise<void>
-  //   deleteUser: (id: string) => Promise<void>
   getUsers: () => Promise<void>;
-  users: IUserData | null;
+  users: IUser[];
   isLoading: boolean;
-  params: IParam;
-  setParams: (value: IParam) => void;
+  deleteUser: (Id: string) => Promise<void>;
+  createUser: (value: IUser) => Promise<void>;
 }
 
 interface IProps {
-  children: React.ReactNode;
-}
-
-interface IParam {
-  page: number;
-  pageSize: number;
+  children: ReactNode;
 }
 
 const UsersContext = createContext<IContext>({} as IContext);
 
-export const useUsersContext = () => useContext(UsersContext);
+export const useUsers = () => useContext(UsersContext);
 
-export const UsersContextProvider = ({
-  children,
-}: React.PropsWithChildren<IProps>) => {
-  const [users, setUsers] = useState<IUserData | null>(null);
-  const { get } = useFetch();
+export const UsersContextProvider: FC<IProps> = ({ children }) => {
+  const [users, setUsers] = useState<IUser[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [params, setParams] = useState({
-    page: 1,
-    pageSize: 10,
-  });
+  const { get, remove, post } = useFetch();
 
   const getUsers = useCallback(async () => {
     setIsLoading(true);
-    const response = await get(
-      `/dashboard/users?page=${params.page}&page_size=${params.pageSize}`
-    );
-    setUsers(response);
+    const response = await get("students");
+    setUsers(response.data);
     setIsLoading(false);
-  }, [get, params.page, params.pageSize]);
+  }, []);
 
-  const value = React.useMemo(
-    () => ({
-      params,
-      setParams,
-      users,
-      getUsers,
-      isLoading,
-    }),
-    [users, getUsers, params, setParams, isLoading]
-  );
+  const deleteUser = useCallback(async (Id: string) => {
+    await remove(`student/${Id}`);
+    getUsers();
+  }, []);
+
+  const createUser = useCallback(async (value: IUser) => {
+    await post("student/register", value);
+    getUsers();
+  }, []);
+
+  const value = {
+    users,
+    getUsers,
+    isLoading,
+    deleteUser,
+    createUser,
+  };
 
   return (
     <UsersContext.Provider value={value}>{children}</UsersContext.Provider>
