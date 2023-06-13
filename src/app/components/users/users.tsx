@@ -1,8 +1,4 @@
-import {
-  ChevronDownIcon,
-  ChevronUpIcon,
-  SearchIcon,
-} from "@chakra-ui/icons";
+import { ChevronDownIcon, ChevronUpIcon, SearchIcon } from "@chakra-ui/icons";
 import {
   Box,
   Heading,
@@ -82,12 +78,21 @@ export const Users = () => {
         accessor: "email",
       },
       {
-        Header: "English",
+        Header: "Ingliz tili darajasi",
         accessor: "englishProficiencyLevel",
       },
       {
         Header: "IQ",
         accessor: "problemSolvingSkills",
+      },
+
+      {
+        Header: "IT qobilyatlari",
+        accessor: "itskills",
+      },
+      {
+        Header: "Texnologiyalar",
+        accessor: "ittools",
       },
       {
         Header: "Action",
@@ -104,17 +109,11 @@ export const Users = () => {
                     Amallar
                   </MenuButton>
                   <MenuList>
-                    {/* <MenuItem as={Link} to={`${row.original.id}/edit`}>
-                      Tahrirlash
-                    </MenuItem> */}
                     <MenuItem
                       onClick={openDeleteModal.bind(null, row.original)}
                     >
                       O'chirish
                     </MenuItem>
-                    {/* <MenuItem as={Link} to={`${row.original.id}`}>
-                      Ko'rish
-                    </MenuItem> */}
                   </MenuList>
                 </>
               )}
@@ -150,11 +149,6 @@ export const Users = () => {
             <Input onChange={handleSearch} placeholder="Search station" />
           </InputGroup>
         </FormControl>
-        <Flex gap="4">
-          {/* <Button as={Link} to="create" colorScheme="blue">
-            <AddIcon mr="2" /> Yangilik qo'shish
-          </Button> */}
-        </Flex>
       </Flex>
       {filteredUser.length ? (
         <ReusableTable

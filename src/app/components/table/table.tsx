@@ -60,11 +60,12 @@ function TableBody<T extends object>({
                 >
                   {headerGroup.headers.map((column, index) => (
                     <Th
-                      width={index !== 0 ? `${100 / columns?.length}%` : "20px"}
+                      width={"200px"}
                       border="none"
                       textTransform="capitalize"
                       textColor="dark"
                       fontSize="14px"
+                      whiteSpace="nowrap"
                       fontWeight="medium"
                       {...column.getHeaderProps()}
                     >
@@ -106,9 +107,7 @@ function TableBody<T extends object>({
                       {row.cells.map((cell, index) => (
                         <Td
                           border="none"
-                          width={
-                            index !== 0 ? `${100 / columns?.length}%` : "20px"
-                          }
+                          width={"200px"}
                           {...cell.getCellProps()}
                         >
                           {cell.render("Cell")}
