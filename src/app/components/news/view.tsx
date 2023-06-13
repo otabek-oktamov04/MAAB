@@ -26,7 +26,9 @@ export const NewsView = () => {
         to="edit"
       />
       <Heading mb="20px">{activeNews?.newsContent}</Heading>
-      <Text>{activeNews?.description}</Text>
+      <Text
+        dangerouslySetInnerHTML={{ __html: activeNews?.description || "" }}
+      ></Text>
     </Box>
   );
 };

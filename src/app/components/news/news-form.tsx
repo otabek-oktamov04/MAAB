@@ -12,6 +12,7 @@ import { INews } from "../../shared/interfaces";
 import { Link, useNavigate } from "react-router-dom";
 import { useNews } from "../../contexts/news.context";
 import { useNotification } from "../../contexts";
+import { Editor } from "@tinymce/tinymce-react";
 
 interface IProps {
   initialValue?: INews;
@@ -23,6 +24,7 @@ export const NewsForm = ({ initialValue }: IProps) => {
     register,
     reset,
     formState: { isSubmitting },
+    setValue,
   } = useForm<INews>({
     defaultValues: initialValue,
     mode: "onChange",
@@ -44,6 +46,27 @@ export const NewsForm = ({ initialValue }: IProps) => {
     reset();
   };
 
+  const EditorField: React.FC<{ name: string; defaultValue?: string }> = ({
+    name,
+    defaultValue,
+  }) => {
+    const handleEditorChange = (content: string) => {
+      setValue("description", content);
+    };
+
+    return (
+      <Editor
+        apiKey="rnh0axi8gittbak67atz4djjsqyy01qe3iqkqphghk5dsdaj"
+        value={defaultValue}
+        onEditorChange={handleEditorChange}
+        plugins={
+          "anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tableofcontents footnotes mergetags autocorrect typography inlinecss"
+        }
+        toolbar="undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat"
+      />
+    );
+  };
+
   return (
     <Box width="80%" px="24px" py="32px" background="white" borderRadius="md">
       <form onSubmit={handleSubmit(onFormSubmit)}>
@@ -58,12 +81,7 @@ export const NewsForm = ({ initialValue }: IProps) => {
 
         <FormControl isRequired>
           <FormLabel>Tavsif</FormLabel>
-          <Textarea
-            height="500px"
-            {...register("description", {
-              required: true,
-            })}
-          />
+          <EditorField name={""} defaultValue={initialValue?.description} />
         </FormControl>
 
         <ButtonGroup mt="6" gap="2" display="flex" justifyContent="end">

@@ -68,17 +68,17 @@ export const News = () => {
   const columns = useMemo(
     () => [
       {
+        Header: "ID",
+        accessor: "ID",
+        Cell: ({ row }: Cell<INews>) => {
+          return <Text noOfLines={2}>{row.original.id}</Text>;
+        },
+      },
+      {
         Header: "Sarlavha",
         accessor: " newsContent",
         Cell: ({ row }: Cell<INews>) => {
           return <Text noOfLines={2}>{row.original.newsContent}</Text>;
-        },
-      },
-      {
-        Header: "Tavsif",
-        accessor: "",
-        Cell: ({ row }: Cell<INews>) => {
-          return <Text noOfLines={2}>{row.original.description}</Text>;
         },
       },
 

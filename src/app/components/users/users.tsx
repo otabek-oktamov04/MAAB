@@ -1,5 +1,4 @@
 import {
-  AddIcon,
   ChevronDownIcon,
   ChevronUpIcon,
   SearchIcon,
@@ -23,11 +22,8 @@ import {
 } from "@chakra-ui/react";
 import { ChangeEvent, useEffect, useMemo, useState } from "react";
 import DeleteConfirmationModal from "../../../_metronic/layout/components/delete-confirmation/delete-confirmation";
-import { INews } from "../../shared/interfaces";
 import { Cell } from "react-table";
 import ReusableTable from "../table/table";
-import { Link } from "react-router-dom";
-import { useNews } from "../../contexts/news.context";
 import { useUsers } from "../../contexts/user.context";
 import { IUser } from "../../shared/interfaces/user";
 
